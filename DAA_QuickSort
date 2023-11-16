@@ -1,0 +1,88 @@
+
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+
+
+int partition(vector<int> &a,int low, int high){
+    int i=low;
+    int j=high;
+    int pivot=a[low];
+    
+    while(i<j){
+        while(a[i]<=pivot && i<=high){
+            i++;
+        }
+        while(a[j]>=pivot && j>=low+1){
+            j--;
+        }
+        if(i<j){
+            swap(a[i],a[j]);
+        }
+        
+    }
+    swap(a[low],a[j]);
+    return j;
+}
+
+int dis=0;
+void quicksortDis(vector<int> &a,int low, int high){
+    if(low < high){
+        dis++;
+        int pindex = partition(a, low,  high);
+        quicksortDis(a,low,pindex-1);
+        quicksortDis(a,pindex+1,high);
+        // return a;
+    }
+}
+
+int ran=0;
+void quicksortRan(vector<int> &a,int low, int high){
+    if(low < high){
+        // Randomly choose pivot and swap with the last element
+        int randomIndex = low + rand() % (high - low + 1);
+        swap(a[randomIndex], a[low]);
+        ran++;
+
+        int pindex = partition(a, low,  high);
+        quicksortRan(a,low,pindex-1);
+        quicksortRan(a,pindex+1,high);
+        // return a;
+    }
+}
+
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    vector<int> d = a;
+    vector<int> r = a;
+    
+    // vector<int> ans;
+    // quicksort(a,0,n-1);
+    cout << "discrim Sorted array: ";
+    quicksortDis(d,0,n-1);
+    for (int i = 0; i < n; i++) {
+        cout << d[i] << " ";
+    }
+    cout<<"dissss"<<dis<<endl;
+    cout<<endl;
+    
+    cout << "random Sorted array: ";
+    quicksortRan(r,0,n-1);
+    for (int i = 0; i < n; i++) {
+        cout << r[i] << " ";
+    }
+    cout<<"rannnnn"<<ran<<endl;
+    cout<<endl;
+
+
+    
+}
+
+
